@@ -56,7 +56,7 @@
 				                    <tr>
 			                         	<th>Nome</th>
 				                        <th>Cognome</th>
-				                        <th>>Codice Fiscale</th>
+				                        <th>Codice Fiscale</th>
 				                        <th>Azioni</th>
 				                    </tr>
 				                </thead>

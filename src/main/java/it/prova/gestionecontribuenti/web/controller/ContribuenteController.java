@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -80,5 +81,22 @@ public class ContribuenteController {
 		}
 
 		return new Gson().toJson(ja);
+	}
+	
+	@GetMapping("/search")
+	public String searchContribuente() {
+		return "contribuente/search";
+	}
+	
+	@PostMapping("/list")
+	public String listContribuenti(ContribuenteDTO contribuenteExample, @RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "0") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
+			ModelMap model) {
+
+		List<Contribuente> contribuenti = contribuenteService.findByExample(contribuenteExample.buildContribuenteModel(), pageNo,
+				pageSize, sortBy).getContent();
+
+		model.addAttribute("contribuenti_list_attribute", ContribuenteDTO.createContribuenteDTOListFromModelList(contribuenti));
+		return "contribuente/list";
 	}
 }
