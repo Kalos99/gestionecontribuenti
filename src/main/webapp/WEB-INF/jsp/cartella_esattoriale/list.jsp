@@ -38,6 +38,9 @@
 				    </div>
 				    <div class='card-body'>
 				    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/cartella_esattoriale/insert">Add New</a>
+				    	<a href="${pageContext.request.contextPath }/cartella_esattoriale/search" class='btn btn-outline-secondary' >
+				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
+				        </a>
 				    
 				        <div class='table-responsive'>
 				            <table class='table table-striped ' >

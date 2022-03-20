@@ -8,11 +8,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,6 +23,8 @@ import it.prova.gestionecontribuenti.dto.ContribuenteDTO;
 import it.prova.gestionecontribuenti.model.CartellaEsattoriale;
 import it.prova.gestionecontribuenti.service.CartellaEsattorialeService;
 import it.prova.gestionecontribuenti.service.ContribuenteService;
+import it.prova.raccoltafilmspringmvc.dto.FilmDTO;
+import it.prova.raccoltafilmspringmvc.model.Film;
 
 @Controller
 @RequestMapping(value = "/cartella_esattoriale")
@@ -76,5 +80,17 @@ public class CartellaEsattorialeController {
 	public String searchCartelle(Model model) {
 		model.addAttribute("contribuenti_list_attribute", ContribuenteDTO.createContribuenteDTOListFromModelList(contribuenteService.listAllElements()));
 		return "cartella_esattoriale/search";
+	}
+	
+	@PostMapping("/list")
+	public String listCartelle(CartellaEsattorialeDTO cartellaExample, @RequestParam(defaultValue = "0") Integer pageNo,
+			@RequestParam(defaultValue = "10") Integer pageSize, @RequestParam(defaultValue = "id") String sortBy,
+			ModelMap model) {
+
+		List<CartellaEsattoriale> cartelle = cartellaEsattorialeService.findByExample(cartellaExample.buildCartellaEsattorialeModel(), pageNo,
+				pageSize, sortBy).getContent();
+
+		model.addAttribute("cartella_list_attribute", CartellaEsattorialeDTO.createCartellaEsattorialeDTOListFromModelList(cartelle, true));
+		return "cartella_esattoriale/list";
 	}
 }
