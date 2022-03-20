@@ -111,4 +111,23 @@ public class CartellaEsattorialeController {
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/cartella_esattoriale";
 	}
+	
+	@GetMapping("/edit/{idCartella}")
+	public String editCartella(@PathVariable(required = true) Long idCartella, Model model) {
+		model.addAttribute("edit_cartella_attr", CartellaEsattorialeDTO.buildCartellaEsattorialeDTOFromModel(cartellaEsattorialeService.caricaSingoloElemento(idCartella), true));
+		return "cartella_esattoriale/edit";
+	}
+
+	@PostMapping("/update")
+	public String updateCartella(@Valid @ModelAttribute("edit_cartella_attr") CartellaEsattorialeDTO cartellaDTO, BindingResult result,
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			return "cartella_esattoriale/edit";
+		}
+		cartellaEsattorialeService.aggiorna(cartellaDTO.buildCartellaEsattorialeModel());
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/cartella_esattoriale";
+	}
 }

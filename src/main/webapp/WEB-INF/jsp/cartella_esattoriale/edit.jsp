@@ -16,7 +16,7 @@
 		        color: red; 
 		    }
 		</style>
-		<title>Inserisci nuovo</title>
+		<title>Aggiorna cartella</title>
 	    
 	</head>
 	<body class="d-flex flex-column h-100">
@@ -41,16 +41,17 @@
 					
 					<div class='card'>
 					    <div class='card-header'>
-					        <h5>Inserisci nuova cartella esattoriale</h5> 
+					        <h5>Inserisci i dati per l'aggiornamento della cartella esattoriale</h5> 
 					    </div>
 					    <div class='card-body'>
 			
-								<form:form method="post" modelAttribute="insert_cartella_attr" action="save" novalidate="novalidate" class="row g-3">
+								<form:form method="post" modelAttribute="edit_cartella_attr" action="${pageContext.request.contextPath }/cartella_esattoriale/update" novalidate="novalidate" class="row g-3">
+									<form:hidden path="id"/>
 								
 									<div class="col-md-6">
 										<label for="descrizione" class="form-label">Descrizione</label>
 										<spring:bind path="descrizione">
-											<input type="text" name="descrizione" id="descrizione" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire la descrizione" value="${insert_cartella_attr.descrizione }">
+											<input type="text" name="descrizione" id="descrizione" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire la descrizione" value="${edit_cartella_attr.descrizione }">
 										</spring:bind>
 										<form:errors  path="descrizione" cssClass="error_field" />
 									</div>
@@ -58,7 +59,7 @@
 									<div class="col-md-6">
 										<label for="importo" class="form-label">Importo (euro)</label>
 										<spring:bind path="importo">
-											<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="importo" id="importo" placeholder="Inserire l'importo" value="${insert_cartella_attr.importo }">
+											<input type="number" class="form-control ${status.error ? 'is-invalid' : ''}" name="importo" id="importo" placeholder="Inserire l'importo" value="${edit_cartella_attr.importo }">
 										</spring:bind>
 										<form:errors  path="importo" cssClass="error_field" />
 									</div>
@@ -68,10 +69,10 @@
 								    <spring:bind path="stato">
 									    <select class="form-select ${status.error ? 'is-invalid' : ''}" id="stato" name="stato" required>
 									    	<option value="" selected> - Selezionare - </option>
-									      	<option value="CREATA" ${insert_cartella_attr.stato == 'CREATA'?'selected':''} >CREATA</option>
-									      	<option value="IN_VERIFICA" ${insert_cartella_attr.stato == 'IN_VERIFICA'?'selected':''} >IN VERIFICA</option>
-									      	<option value="CONCLUSA" ${insert_cartella_attr.stato == 'CONCLUSA'?'selected':''} >CONCLUSA</option>
-									        <option value="IN_CONTENZIOSO" ${insert_cartella_attr.stato == 'IN_CONTENZIOSO'?'selected':''} >IN CONTENZIOSO</option>
+									      	<option value="CREATA" ${edit_cartella_attr.stato == 'CREATA'?'selected':''} >CREATA</option>
+									      	<option value="IN_VERIFICA" ${edit_cartella_attr.stato == 'IN_VERIFICA'?'selected':''} >IN VERIFICA</option>
+									      	<option value="CONCLUSA" ${edit_cartella_attr.stato == 'CONCLUSA'?'selected':''} >CONCLUSA</option>
+									        <option value="IN_CONTENZIOSO" ${edit_cartella_attr.stato == 'IN_CONTENZIOSO'?'selected':''} >IN CONTENZIOSO</option>
 									    </select>
 								    </spring:bind>
 								    <form:errors  path="stato" cssClass="error_field" />
@@ -82,9 +83,9 @@
 										<label for="contribuenteSearchInput" class="form-label">Contribuente:</label>
 										<spring:bind path="contribuente">
 											<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="contribuenteSearchInput"
-												name="contribuenteInput" value="${insert_cartella_attr.contribuente.nome}${empty insert_cartella_attr.contribuente.nome?'':' '}${insert_cartella_attr.contribuente.cognome}">
+												name="contribuenteInput" value="${edit_cartella_attr.contribuente.nome}${empty edit_cartella_attr.contribuente.nome?'':' '}${edit_cartella_attr.contribuente.cognome}">
 										</spring:bind>
-										<input type="hidden" name="contribuente.id" id="contribuenteId" value="${insert_cartella_attr.contribuente.id}">
+										<input type="hidden" name="contribuente.id" id="contribuenteId" value="${edit_cartella_attr.contribuente.id}">
 										<form:errors  path="contribuente" cssClass="error_field" />
 									</div>
 								
