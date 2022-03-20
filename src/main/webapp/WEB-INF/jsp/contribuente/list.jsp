@@ -51,7 +51,7 @@
 				        </a>
 				    
 				        <div class='table-responsive'>
-				            <table class='table table-striped ' >
+				            <table class='table table-hover ' >
 				                <thead>
 				                    <tr>
 			                         	<th>Nome</th>
@@ -62,7 +62,7 @@
 				                </thead>
 				                <tbody>
 				                	<c:forEach items="${contribuenti_list_attribute }" var="contribuenteItem">
-										<tr>
+										<tr class = "${contribuenteItem.isInContenzioso()?'table-danger':''}">
 											<td>${contribuenteItem.nome }</td>
 											<td>${contribuenteItem.cognome }</td>
 											<td>${contribuenteItem.codiceFiscale }</td>
