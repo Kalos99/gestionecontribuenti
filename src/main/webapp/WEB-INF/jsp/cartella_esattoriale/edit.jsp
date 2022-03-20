@@ -101,7 +101,7 @@
 									$("#contribuenteSearchInput").autocomplete({
 										 source: function(request, response) {
 										        $.ajax({
-										            url: "../contribuente/searchContribuentiAjax",
+										            url: "${pageContext.request.contextPath }/contribuente/searchContribuentiAjax",
 										            datatype: "json",
 										            data: {
 										                term: request.term,   

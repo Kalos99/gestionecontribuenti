@@ -26,6 +26,8 @@ import com.google.gson.JsonObject;
 
 import it.prova.gestionecontribuenti.dto.ContribuenteConCartelleDTO;
 import it.prova.gestionecontribuenti.dto.ContribuenteDTO;
+import it.prova.gestionecontribuenti.exceptions.CartelleAssociateException;
+import it.prova.gestionecontribuenti.exceptions.ElementNotFoundException;
 import it.prova.gestionecontribuenti.model.Contribuente;
 import it.prova.gestionecontribuenti.service.ContribuenteService;
 
@@ -106,5 +108,26 @@ public class ContribuenteController {
 	public String show(@PathVariable(required = true) Long idContribuente, Model model) {
 		model.addAttribute("show_contribuente_attr", ContribuenteConCartelleDTO.buildContribuenteConCartelleDTOFromModel(contribuenteService.caricaSingoloElementoConCartelle(idContribuente)));
 		return "contribuente/show";
+	}
+	
+	@GetMapping("/delete/{idContribuente}")
+	public String delete(@PathVariable(required = true) Long idContribuente, Model model) {
+		model.addAttribute("delete_contribuente_attr", ContribuenteDTO.buildContribuenteDTOFromModel(contribuenteService.caricaSingoloElemento(idContribuente)));
+		return "contribuente/delete";
+	}
+	
+	@PostMapping("/remove")
+	public String remove(@RequestParam(required = true) Long idContribuente, RedirectAttributes redirectAttrs) {
+	    try {
+	        contribuenteService.rimuovi(idContribuente);
+	      } catch (ElementNotFoundException e) {
+	        redirectAttrs.addFlashAttribute("errorMessage", "Contribuente non trovato.");
+	        return "redirect:/contribuente";
+	      } catch (CartelleAssociateException e) {
+		        redirectAttrs.addFlashAttribute("errorMessage", "Impossibile rimuovere: sono presenti delle cartelle esattoriali associate a questo contribuente");
+		        return "redirect:/contribuente";
+		      }
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/contribuente";
 	}
 }
