@@ -24,7 +24,7 @@ private Long id;
 	private Date dataDiNascita;
 	
 	@NotBlank(message = "{codiceFiscale.notblank}")
-	@Size(min = 16, max = 16, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
+	@Size(min = 16, max = 16, message = "Il codice fiscale deve essere lungo esattamente {max} caratteri")
 	private String codiceFiscale;
 	
 	@NotBlank(message = "{indirizzo.notblank}")

@@ -12,11 +12,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionecontribuenti.model.CartellaEsattoriale;
 import it.prova.gestionecontribuenti.repository.cartellaesattoriale.CartellaEsattorialeRepository;
 
+@Service
 public class CartellaEsattorialeServiceImpl implements CartellaEsattorialeService{
 	
 	@Autowired

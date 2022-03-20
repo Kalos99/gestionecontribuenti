@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionecontribuenti.exceptions.CartelleAssociateException;
@@ -19,6 +20,7 @@ import it.prova.gestionecontribuenti.exceptions.ElementNotFoundException;
 import it.prova.gestionecontribuenti.model.Contribuente;
 import it.prova.gestionecontribuenti.repository.contribuente.ContribuenteRepository;
 
+@Service
 public class ContribuenteServiceImpl implements ContribuenteService{
 	
 	@Autowired
@@ -95,5 +97,10 @@ public class ContribuenteServiceImpl implements ContribuenteService{
 			paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
 		return repository.findAll(specificationCriteria, paging);
+	}
+
+	@Override
+	public List<Contribuente> cercaByCognomeENomeILike(String term) {
+		return repository.findByCognomeIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByNomeAsc(term, term);
 	}
 }

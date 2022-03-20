@@ -21,4 +21,6 @@ public interface ContribuenteService {
 	public void rimuovi(Long id);
 
 	public Page<Contribuente> findByExample(Contribuente example, Integer pageNo, Integer pageSize, String sortBy);
+	
+	public List<Contribuente> cercaByCognomeENomeILike(String term);
 }
