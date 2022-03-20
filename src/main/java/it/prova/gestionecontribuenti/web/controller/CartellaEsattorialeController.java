@@ -12,6 +12,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,8 +24,6 @@ import it.prova.gestionecontribuenti.dto.ContribuenteDTO;
 import it.prova.gestionecontribuenti.model.CartellaEsattoriale;
 import it.prova.gestionecontribuenti.service.CartellaEsattorialeService;
 import it.prova.gestionecontribuenti.service.ContribuenteService;
-import it.prova.raccoltafilmspringmvc.dto.FilmDTO;
-import it.prova.raccoltafilmspringmvc.model.Film;
 
 @Controller
 @RequestMapping(value = "/cartella_esattoriale")
@@ -92,5 +91,11 @@ public class CartellaEsattorialeController {
 
 		model.addAttribute("cartella_list_attribute", CartellaEsattorialeDTO.createCartellaEsattorialeDTOListFromModelList(cartelle, true));
 		return "cartella_esattoriale/list";
+	}
+	
+	@GetMapping("/show/{idCartella}")
+	public String showCartella(@PathVariable(required = true) Long idCartella, Model model) {
+		model.addAttribute("show_cartella_attr", cartellaEsattorialeService.caricaSingoloElementoEager(idCartella));
+		return "cartella_esattoriale/show";
 	}
 }
