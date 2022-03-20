@@ -2,6 +2,7 @@ package it.prova.gestionecontribuenti.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -127,6 +128,26 @@ public class ContribuenteController {
 		        redirectAttrs.addFlashAttribute("errorMessage", "Impossibile rimuovere: sono presenti delle cartelle esattoriali associate a questo contribuente");
 		        return "redirect:/contribuente";
 		      }
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/contribuente";
+	}
+	
+	@GetMapping("/edit/{idContribuente}")
+	public String editContribuente(@PathVariable(required = true) Long idContribuente, Model model) {
+		model.addAttribute("edit_contribuente_attr",
+				ContribuenteDTO.buildContribuenteDTOFromModel(contribuenteService.caricaSingoloElemento(idContribuente)));
+		return "contribuente/edit";
+	}
+
+	@PostMapping("/update")
+	public String updateContribuente(@Valid @ModelAttribute("edit_contribuente_attr") ContribuenteDTO contribuenteDTO, BindingResult result,
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			return "contribuente/edit";
+		}
+		contribuenteService.aggiorna(contribuenteDTO.buildContribuenteModel());
+
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/contribuente";
 	}
