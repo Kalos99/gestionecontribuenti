@@ -98,4 +98,17 @@ public class CartellaEsattorialeController {
 		model.addAttribute("show_cartella_attr", cartellaEsattorialeService.caricaSingoloElementoEager(idCartella));
 		return "cartella_esattoriale/show";
 	}
+	
+	@GetMapping("/delete/{idCartella}")
+	public String delete(@PathVariable(required = true) Long idCartella, Model model) {
+		model.addAttribute("delete_cartella_attr", CartellaEsattorialeDTO.buildCartellaEsattorialeDTOFromModel(cartellaEsattorialeService.caricaSingoloElemento(idCartella), true));
+		return "cartella_esattoriale/delete";
+	}
+	
+	@PostMapping("/remove")
+	public String remove(@RequestParam(required = true) Long idCartella, RedirectAttributes redirectAttrs) {
+		cartellaEsattorialeService.rimuovi(idCartella);
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/cartella_esattoriale";
+	}
 }
